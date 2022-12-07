@@ -1,0 +1,34 @@
+{%extends 'cards/base.html'%}
+
+{%load humanize%}
+{%block content%}
+
+<h2>
+    All Cards
+</h2>
+
+<a href="{% url 'card-create' %}" role="button">
+    ✨ Create New Card
+</a>
+
+
+<!--We can either use card_list or object_list as queryset list -->
+<!--Here we used 'modelname_list' convention  (card_list)  
+        modelname is lower-case-->
+{%for card in card_list%}
+{%ifchanged %}
+    <h3>{{card.box | ordinal}}</h3>
+{%endifchanged%}
+{%include 'cards/card.html'%} <!--We can use 'with card = card' 
+                                    in include statment , but for this case 
+                                    object is passed as card internally in UpdataView view
+                                    -->
+ {%comment%}
+ {{card}}<!--will call __str__ from model class-->
+<!--just to learn more about  humanize filters -->
+<h6>{{card.date_created | naturalday}} </h6>
+{%endcomment%}
+
+{%endfor%}
+
+{%endblock%}

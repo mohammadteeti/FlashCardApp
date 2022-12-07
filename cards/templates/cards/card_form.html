@@ -1,0 +1,25 @@
+{%extends 'cards/base.html'%}
+
+{%block content%}
+
+{%if card%} <!--Same as if object because queryset in update will be 
+            object = Card.objects.get(pk=card.id) and object is replaced with
+            model name lowwercase 'card'
+            try to replace 'card' with  'object' 
+            it will work -->
+    <h2>✏ Edit Card</h2>
+{%else%}
+    <h2>✨ Create New Card</h2>
+{%endif%}
+
+<form method="post">
+    {%csrf_token%}
+    {{form.as_p}}
+
+    <input type="submit" value="Save Card">
+
+</form>
+<a href="{% url 'card-list' %}">
+    Cancel
+    </a>
+{%endblock%}
